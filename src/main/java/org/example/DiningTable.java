@@ -36,12 +36,13 @@ public class DiningTable {
 
     forkLocks[leftForkIndex].lock();
     try {
+
       forks[leftForkIndex].pickUp();
-      System.out.println("Философ " + philosopherId + " взял левую вилку.");
+      //System.out.println("Философ " + philosopherId + " взял левую вилку.");
       forkLocks[rightForkIndex].lock();
       try {
         forks[rightForkIndex].pickUp();
-        System.out.println("Философ " + philosopherId + " взял правую вилку.");
+        System.out.println("Философ " + philosopherId + " взял вилки.");
       } finally {
         if (!forks[rightForkIndex].isInUse()) {
           forkLocks[rightForkIndex].unlock();
@@ -63,9 +64,9 @@ public class DiningTable {
     int rightForkIndex = (philosopherId + 1) % numOfPhilosophers;
 
     forks[leftForkIndex].putDown();
-    System.out.println("Философ " + philosopherId + " положил левую вилку.");
+    //System.out.println("Философ " + philosopherId + " положил левую вилку.");
     forks[rightForkIndex].putDown();
-    System.out.println("Философ " + philosopherId + " положил правую вилку.");
+    System.out.println("Философ " + philosopherId + " положил вилки.");
 
     forkLocks[leftForkIndex].unlock();
     forkLocks[rightForkIndex].unlock();

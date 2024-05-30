@@ -1,6 +1,8 @@
 package org.example;
 
+import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,8 +32,8 @@ public class ConfigurationManager {
    */
   public int getEatingTimeFromUser() {
     System.out.print(
-        "Введите временной промежуток для поглощения пищи (в миллисекундах: 1 - 1000000000)\n"
-            + " или нажмите Enter для использования значения(10000) по умолчанию: ");
+            "Введите временной промежуток для поглощения пищи (в миллисекундах: 1 - 1000000000)\n"
+                    + " или нажмите Enter для использования значения(10000) по умолчанию: ");
     while (true) {
       try {
         String str = scanner.nextLine();
@@ -46,8 +48,8 @@ public class ConfigurationManager {
         }
       } catch (NumberFormatException e) {
         System.out.println(
-            "Ошибка: введите корректное число\n"
-                + " или нажмите Enter для использования значения(10000) по умолчанию:");
+                "Ошибка: введите корректное число\n"
+                        + " или нажмите Enter для использования значения(10000) по умолчанию:");
       }
     }
   }
@@ -73,7 +75,8 @@ public class ConfigurationManager {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
       DOMSource domSource = new DOMSource(document);
-      StreamResult streamResult = new StreamResult(FILE_NAME);
+      // Use the root directory
+      StreamResult streamResult = new StreamResult(new File(Paths.get("").toAbsolutePath().toString(), FILE_NAME));
 
       transformer.transform(domSource, streamResult);
 
@@ -91,10 +94,10 @@ public class ConfigurationManager {
   public int loadSettingsFromXML() {
     int eatingTime = 0; // временное значение для возвращения
     try {
-      ClassLoader classLoader = getClass().getClassLoader();
-      InputStream inputStream = classLoader.getResourceAsStream(FILE_NAME);
+      // Use the root directory
+      File file = new File(Paths.get("").toAbsolutePath().toString(), FILE_NAME);
 
-      if (inputStream == null) {
+      if (!file.exists()) {
         System.out.println("Файл настроек не существует.");
         return eatingTime;
       }
@@ -102,12 +105,12 @@ public class ConfigurationManager {
       DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 
-      Document document = documentBuilder.parse(inputStream);
+      Document document = documentBuilder.parse(file);
       document.getDocumentElement().normalize();
 
       Element root = document.getDocumentElement();
       eatingTime =
-          Integer.parseInt(root.getElementsByTagName("eatingTime").item(0).getTextContent());
+              Integer.parseInt(root.getElementsByTagName("eatingTime").item(0).getTextContent());
 
       System.out.println("Настройки загружены из XML файла успешно.");
     } catch (Exception e) {
