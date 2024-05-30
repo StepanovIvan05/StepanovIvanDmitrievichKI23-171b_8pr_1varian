@@ -42,7 +42,7 @@ public class Philosopher extends Thread {
    * @throws InterruptedException если поток прерван
    */
   private void think() throws InterruptedException {
-    System.out.println(STR."Философ \{id} размышляет...");
+    System.out.println("Философ " + id + " размышляет...");
     Thread.sleep((long) (Math.random() * 1000)); // случайная задержка для размышлений
   }
 
@@ -51,7 +51,7 @@ public class Philosopher extends Thread {
    * @throws InterruptedException если поток прерван
    */
   private void eat() throws InterruptedException {
-    System.out.println(STR."Философ \{id} ест...");
+    System.out.println("Философ " + id + " ест...");
     Thread.sleep(eatingTime); // философ ест в течение eatingTime миллисекунд
   }
 }

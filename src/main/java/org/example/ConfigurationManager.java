@@ -1,10 +1,6 @@
 package org.example;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
@@ -77,14 +73,12 @@ public class ConfigurationManager {
       TransformerFactory transformerFactory = TransformerFactory.newInstance();
       Transformer transformer = transformerFactory.newTransformer();
       DOMSource domSource = new DOMSource(document);
-      Path outputPath = Paths.get("src/main/resources", FILE_NAME);
-      Files.createDirectories(outputPath.getParent());
-      StreamResult streamResult = new StreamResult(outputPath.toFile());
+      StreamResult streamResult = new StreamResult(FILE_NAME);
 
       transformer.transform(domSource, streamResult);
 
       System.out.println("Настройки сохранены в XML файл успешно.");
-    } catch (ParserConfigurationException | TransformerException | IOException e) {
+    } catch (ParserConfigurationException | TransformerException e) {
       System.out.println("Настройки не сохранены в XML файл.");
     }
   }

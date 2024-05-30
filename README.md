@@ -4,8 +4,7 @@ This project demonstrates how to compile a Maven project, package it into a JAR 
 
 ## Prerequisites
 
-1. **Java JDK**: Ensure you have JDK 22 installed.
-   - [Download JDK](https://www.oracle.com/java/technologies/javase-jdk22-downloads.html)
+1. **Java JDK**: Ensure you have JDK 17 installed.
    - Set the `JAVA_HOME` environment variable to your JDK installation directory.
    - Add `JAVA_HOME/bin` to your system `PATH`.
 
